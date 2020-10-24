@@ -1,0 +1,13 @@
+{
+  "name": "API",
+  "version": "1.0.0",
+  "description": "API for Ichika",
+  "main": "main.ts",
+  "repository": "https://github.com/IchikaJS/API",
+  "author": "Dylan Ogle <delxhq0@gmail.com>",
+  "license": "GPL-3.0",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

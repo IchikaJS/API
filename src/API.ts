@@ -11,7 +11,7 @@ export class API {
 
   public app: express.Application
 
-  constructor(private port?: number) {
+  constructor(private port: number) {
     this.db = new DB(
       process.env.MONGO_URL,
       process.env.MONGO_USER,
@@ -24,7 +24,7 @@ export class API {
   public async init() {
     await this.db.init()
 
-    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.json())
     this.app.listen(this.port, () => this.logger.info(`Listening on *:${this.port}`))
   }
 }

@@ -1,20 +1,30 @@
+import Logger from '@bwatton/logger'
+import { DB } from './DB'
+
 import express from 'express'
-const app = express()
+import bodyParser from 'body-parser'
 
 export class API {
 
-  constructor(private port: number) { }
+  private logger: Logger = new Logger('API')
+  public db: DB
 
-  public init(): void {
-    app.set('json spaces', 2)
+  public app: express.Application
 
-    this.registerEndpoints()
+  constructor(private port?: number) {
+    this.db = new DB(
+      process.env.MONGO_URL,
+      process.env.MONGO_USER,
+      process.env.MONGO_PASS,
+      'Ichika'
+    )
+    this.app = express()
   }
 
-  private registerEndpoints() {
-    app.get('/status', (req, res) => {
-      res.json({ 'status': '!help | Ichika' })
-    })
-    app.listen(this.port, () => console.log(`Listening on *:${this.port}`))
+  public async init() {
+    await this.db.init()
+
+    this.app.use(bodyParser.json());
+    this.app.listen(this.port, () => this.logger.info(`Listening on *:${this.port}`))
   }
 }

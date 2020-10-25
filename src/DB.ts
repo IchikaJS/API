@@ -8,6 +8,7 @@ export class DB {
   private db!: Db
 
   private statuses!: Collection
+  private responses!: Collection
 
   constructor(
     private mongoUrl: string,
@@ -31,5 +32,18 @@ export class DB {
     this.logger.info(`Connected to MongoDB with DB ${this.mongoDb}`)
 
     this.statuses = this.db.collection('statuses')
+    this.responses = this.db.collection('responses')
+  }
+
+  public async getStatuses() {
+    let statuses = await this.statuses.find().toArray()
+
+    return statuses
+  }
+
+  public async getResponses() {
+    let responses = await this.responses.find().toArray()
+
+    return responses
   }
 }

@@ -16,7 +16,7 @@ export class API {
       process.env.MONGO_URL,
       process.env.MONGO_USER,
       process.env.MONGO_PASS,
-      'Ichika'
+      'ichika'
     )
     this.app = express()
   }
@@ -26,5 +26,16 @@ export class API {
 
     this.app.use(bodyParser.json())
     this.app.listen(this.port, () => this.logger.info(`Listening on *:${this.port}`))
+
+    this.initEndpoints()
+  }
+
+  private async initEndpoints() {
+    this.app.get('/statuses', async (req, res) => {
+      res.json({ statuses: await this.db.getStatuses() })
+    })
+    this.app.get('/responses', async (req, res) => {
+      res.json({ responses: await this.db.getResponses() })
+    })
   }
 }
